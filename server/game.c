@@ -11,6 +11,10 @@ void initPlateau(int plateau[]) {
     }
 }
 
+void afficherLeScore(int scoreJoueur1, int scoreJoueur2) {
+    printf("Score - Joueur 1: %d, Joueur 2: %d\n", scoreJoueur1, scoreJoueur2);
+}
+
 void afficherPlateau(int plateau[]) {
     printf("Camp joueur 2 : ");
     for (int i = NB_TROUS - 1; i >= NB_TROUS / 2; i--) {
@@ -20,7 +24,6 @@ void afficherPlateau(int plateau[]) {
     for (int i = 0; i < NB_TROUS / 2; i++) {
         printf("[%d] ", plateau[i]);
     }
-    printf("\n");
 }
 
 bool peutJouer(int plateau[], int camp) {
@@ -57,18 +60,18 @@ int jouerCoup(int plateau[], int trou, int joueur, int* scoreJoueur, int sensRot
 int main() {
     int plateau[NB_TROUS];
     int scoreJoueur1 = 0, scoreJoueur2 = 0;
-    int joueur, sensRotation;
+    int joueur = 1; // Le joueur 1 commence toujours la partie
+    int sensRotation;
 
     printf("Choisissez le sens de rotation (1 pour anti-horaire, 2 pour horaire) : ");
     scanf("%d", &sensRotation);
-
-    printf("Quel joueur commence la partie (1 ou 2) ? ");
-    scanf("%d", &joueur);
 
     initPlateau(plateau);
     
     while (scoreJoueur1 < CAPTURE_MIN && scoreJoueur2 < CAPTURE_MIN && peutJouer(plateau, 1) && peutJouer(plateau, 2)) {
         afficherPlateau(plateau);
+        afficherLeScore(scoreJoueur1, scoreJoueur2);
+        
         printf("Joueur %d, choisissez un trou (0-5 pour joueur 1, 6-11 pour joueur 2): ", joueur);
         int trou;
         scanf("%d", &trou);
@@ -82,10 +85,12 @@ int main() {
         } else {
             printf("Coup invalide. Essayez de nouveau.\n");
         }
+        printf("\n-------------------------------------------------------------\n");
     }
 
     afficherPlateau(plateau);
-    printf("Score final - Joueur 1: %d, Joueur 2: %d\n", scoreJoueur1, scoreJoueur2);
+    afficherLeScore(scoreJoueur1, scoreJoueur2);
+    
     if (scoreJoueur1 > scoreJoueur2) {
         printf("Joueur 1 gagne!\n");
     } else if (scoreJoueur2 > scoreJoueur1) {
