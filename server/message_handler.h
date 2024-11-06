@@ -9,8 +9,8 @@
 typedef enum { CHAT, MOVE, BOARD, GAME_END } MessageType;
 
 // Function prototypes
-void handle_chat(const char *msg, int client_socket);
-void handle_move(const char *msg, int client_socket);
+void handle_chat(char *msg, int client_socket);
+void handle_move(char *msg, int client_socket, GameState *game);
 void broadcast_board(const GameState *game);
 void send_game_end(int winner_id);
 

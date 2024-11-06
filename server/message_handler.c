@@ -13,3 +13,7 @@ void broadcast_board(const GameState *game) {
 
     send_to_all_clients(board_msg); // Send to all connected clients
 }
+
+void handle_move(char *msg, int client_socket, GameState *game){
+    
+}
