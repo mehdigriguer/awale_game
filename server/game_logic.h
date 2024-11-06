@@ -17,10 +17,11 @@ typedef struct {
 
 // Function prototypes
 void distribute_remaining_seeds(GameState *game);
-int has_seeds(const GameState *game, int player);
+int has_seeds(GameState *game, int player);
 void initialize_game(GameState *game);
 void print_board(const GameState *game);
 int make_move(GameState *game, int player, int pit_index);
-int check_game_end(const GameState *game);
+int check_game_end(GameState *game);
+int determine_winner(GameState *game);
 
 #endif

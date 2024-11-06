@@ -83,7 +83,7 @@ build CMakeFiles/awale_game.dir/server/server.c.obj: C_COMPILER__awale_game_unsc
 
 build awale_game.exe: C_EXECUTABLE_LINKER__awale_game_Debug CMakeFiles/awale_game.dir/server/game.c.obj CMakeFiles/awale_game.dir/server/game_logic.c.obj CMakeFiles/awale_game.dir/server/message_handler.c.obj CMakeFiles/awale_game.dir/server/server.c.obj
   FLAGS = -g
-  LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  LINK_LIBRARIES = -lws2_32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\awale_game.dir
   POST_BUILD = cd .
   PRE_LINK = cd .

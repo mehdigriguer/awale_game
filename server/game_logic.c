@@ -34,7 +34,7 @@ void print_board(const GameState *game) {
 
 
 // Helper function to check if a player has any seeds left in their pits
-int has_seeds(const GameState *game, int player) {
+int has_seeds(GameState *game, int player) {
     for (int i = 0; i < NUM_PITS; i++) {
         if (game->pits[player][i] > 0) {
             return 1; // Player has seeds
@@ -103,4 +103,14 @@ int check_game_end(GameState *game) {
     }
 
     return 0; // Game continues
+}
+// Determine the winner based on player scores
+int determine_winner(GameState *game) {
+    if (game->player_score[0] > game->player_score[1]) {
+        return 0; // Player 1 wins
+    } else if (game->player_score[1] > game->player_score[0]) {
+        return 1; // Player 2 wins
+    } else {
+        return -1; // Tie
+    }
 }

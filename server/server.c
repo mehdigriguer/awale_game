@@ -5,8 +5,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <arpa/inet.h>
-#include <sys/socket.h>
+// #include <arpa/inet.h>
+// #include <sys/socket.h>
+#include <winsock2.h>
+#include <ws2tcpip.h>
+
 #include "game_logic.h"
 #include "message_handler.h"
 
@@ -36,7 +39,10 @@ int setup_server_socket() {
     }
 
     int opt = 1;
-    if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt))) {
+    //Casting the integer value to a pointer to the option value for windows
+    //FOR LINUX
+    //if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt))) {
+    if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR, (const char *)&opt, sizeof(opt))) {
         error_exit("Set socket options failed");
     }
 
@@ -141,10 +147,28 @@ void server_loop(int server_fd) {
         }
     }
 }
-
+//Windows socket code
 int main() {
+
+    //FROM HERE
+    WSADATA wsaData;
+
+    // Initialize WinSock
+    int result = WSAStartup(MAKEWORD(2, 2), &wsaData);
+    if (result != 0) {
+        printf("WSAStartup failed: %d\n", result);
+        return 1;
+    }
+    //TO HERE
+
     int server_fd = setup_server_socket();
     server_loop(server_fd);
     close(server_fd);
+
+    //FROM HERE
+    WSACleanup();
+    //TO HERE
+
+
     return 0;
 }

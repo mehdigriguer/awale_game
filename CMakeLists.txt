@@ -11,3 +11,5 @@ add_executable(awale_game
         server/message_handler.c
         server/server.c
         server/server.h)
+#FOR WINDOWS
+target_link_libraries(awale_game ws2_32)
