@@ -4,4 +4,10 @@ project(awale_game C)
 set(CMAKE_C_STANDARD 11)
 
 add_executable(awale_game
-        server/game.c)
+        server/game.c
+        server/game_logic.c
+        server/game_logic.h
+        server/message_handler.h
+        server/message_handler.c
+        server/server.c
+        server/server.h)
