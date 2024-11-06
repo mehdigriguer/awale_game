@@ -12,6 +12,7 @@
 
 #include "game_logic.h"
 #include "message_handler.h"
+#include <sys/select.h>
 
 
 #define PORT 8080
@@ -22,6 +23,7 @@ GameState game;
 
 // Player sockets
 int player_sockets[MAX_CLIENTS] = {0};
+char *player_names[MAX_CLIENTS] = {};
 int num_players = 0;
 
 void error_exit(const char *msg) {
@@ -67,14 +69,35 @@ int accept_client(int server_fd) {
     int new_socket;
     struct sockaddr_in address;
     socklen_t addrlen = sizeof(address);
+    char player_name[50]; // Allocation pour le nom du joueur, ajustez la taille si nécessaire
+    int name_taken;
 
     if ((new_socket = accept(server_fd, (struct sockaddr *)&address, &addrlen)) < 0) {
         error_exit("Accepting connection failed");
     }
 
     if (num_players < MAX_CLIENTS) {
-        player_sockets[num_players++] = new_socket;
-        printf("Player %d connected!\n", num_players);
+        player_sockets[num_players] = new_socket;
+
+        do {
+            name_taken = 0; // Reset flag for each attempt
+            printf("Choose a name : ");
+            scanf("%49s", player_name); // Limite la longueur du nom à 49 caractères pour éviter les débordements
+
+            // Check if the name is already taken
+            for (int i = 0; i < num_players; i++) {
+                if (strcmp(player_names[i], player_name) == 0) {
+                    printf("Name already taken, please choose another.\n");
+                    name_taken = 1;
+                    break;
+                }
+            }
+        } while (name_taken); // Repeat until a unique name is provided
+
+        // If the name is unique, add it to the list
+        player_names[num_players] = strdup(player_name); // Alloue dynamiquement le nom pour l'ajouter à la liste
+        printf("%s is connected (Player %d) !\n", player_name, num_players + 1);
+        num_players++;
     } else {
         printf("Max players reached. Rejecting connection.\n");
         close(new_socket);
