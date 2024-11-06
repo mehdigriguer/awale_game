@@ -1,0 +1,3 @@
+C:/Users/felix/CLionProjects/awale_game/cmake-build-debug/CMakeFiles/awale_game.dir
+C:/Users/felix/CLionProjects/awale_game/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/felix/CLionProjects/awale_game/cmake-build-debug/CMakeFiles/rebuild_cache.dir
